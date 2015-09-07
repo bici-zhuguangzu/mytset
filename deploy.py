@@ -8,17 +8,18 @@
 import remoteexec
 
 ips = "192.168.12.203"
-url = "192.168.12.209/shell/default.conf"
+url = "192.168.12.209/shell/default.conf"  # 修改url为init的url地址
 hostnames = "node02"
 
 
-def deploys():
-    commands = "echo %s" % hostnames + "> hostname.txt&&curl -s %s" % url
-    print remoteexec.execOnRemote(ips, commands)
+def deploys(IP):
+    commands = "echo %s" % hostnames + \
+        "> hostname.txt&&curl -s %s" % url + "|bash"
+    print remoteexec.execOnRemote(IP, commands)
 
 
 def main():
-    deploys()
+    deploys(ips)
 
 
 if __name__ == '__main__':
