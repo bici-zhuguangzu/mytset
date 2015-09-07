@@ -7,13 +7,33 @@
 
 import XlsxRead
 import deploy
+import threading
+import time
 
 FileName = "/Users/zhuguangzu1/Documents/2.xlsx"
 
-HostDict = XlsxRead.MakeDict(FileName)
-del HostDict[u'名称']
-for key in HostDict.keys():
-    ips = key
-    hostname = HostDict[key]
-    print ips + ":" + hostname
-    deploy.deploys(ips, hostname)
+
+def printtest(test):
+    print test
+    time.sleep(1)
+
+
+def deployfromxlsx():
+    HostDict = XlsxRead.MakeDict(FileName)
+    del HostDict[u'名称']
+    for key in HostDict.keys():
+        ips = key
+        hostname = HostDict[key]
+        test = ips + ":" + hostname
+        # target可以更换为deploys，args为ips hostname
+        t1 = threading.Thread(target=printtest, args=(test,))
+        t1.start()
+        # deploy.deploys(ips, hostname)
+
+
+def main():
+    deployfromxlsx()
+
+
+if __name__ == '__main__':
+    main()
