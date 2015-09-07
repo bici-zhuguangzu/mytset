@@ -1,29 +1,32 @@
 #!/usr/bin/env python
-#-*- coding: utf-8 -*-
-import os
+# -*- coding: utf-8 -*-
 import xlrd
 
-FileName= "/Users/zhuguangzu1/Documents"
+FileName = "/Users/zhuguangzu1/Documents/2.xlsx"
+
 
 def ReadXls():
-    global HostName
-    global HostIP
-    data= xlrd.open_workbook(FileName)
-    table= data.sheets()[0]
-    HostName= table.col_values(1)
-    HostIP= table.col_values(7)
+    data = xlrd.open_workbook(FileName)
+    table = data.sheets()[0]
+    return table
+
 
 def MakeDict():
-    nvs= zip(HostName,HostIP)
-    HostDict= dict( (name,value) for name,value in nvs)
-    print type(HostDict)
+    XlsxData = ReadXls()
+    HostName = XlsxData.col_values(1)
+    HostIP = XlsxData.col_values(7)
+    nvs = zip(HostName, HostIP)
+    HostDict = dict((name, value) for name, value in nvs)
+    return HostDict
+
 
 def MakeDictFormXls():
-	ReadXls()
-    MakeDict()
+    ReadXls()
+    print MakeDict()
+
 
 def main():
     MakeDictFormXls()
 
 if __name__ == '__main__':
-        main() 
+    main()
