@@ -28,9 +28,9 @@ class ZabbixAPI(object):
         self.__user = user
         self.__password = password
         self._zabbix_api_object_list = ('Action', 'Alert', 'APIInfo', 'Application', 'DCheck', 'DHost', 'DRule',
-                'DService', 'Event', 'Graph', 'Graphitem', 'History', 'Host', 'Hostgroup', 'Image', 'Item', 
-                'Maintenance', 'Map', 'Mediatype', 'Proxy', 'Screen', 'Script', 'Template', 'Trigger', 'User',
-                'Usergroup', 'Usermacro', 'Usermedia')
+                                        'DService', 'Event', 'Graph', 'Graphitem', 'History', 'Host', 'Hostgroup', 'Image', 'Item',
+                                        'Maintenance', 'Map', 'Mediatype', 'Proxy', 'Screen', 'Script', 'Template', 'Trigger', 'User',
+                                        'Usergroup', 'Usermacro', 'Usermedia')
 
     def __getattr__(self, name):
         if name not in self._zabbix_api_object_list:
@@ -62,9 +62,9 @@ class ZabbixAPI(object):
 
     def json_obj(self, method, params):
         obj = {'jsonrpc': '2.0',
-                'method': method,
-                'params': params,
-                'id': self.__id}
+               'method': method,
+               'params': params,
+               'id': self.__id}
         if method != 'user.login':
             obj['auth'] = self.__auth
         return json.dumps(obj)
@@ -75,7 +75,7 @@ class ZabbixAPI(object):
         req = urllib2.Request(self.__url, json_obj, headers)
         opener = urllib2.urlopen(req)
         content = json.loads(opener.read())
-        self.__id += 1 
+        self.__id += 1
         return content
 
     '''
@@ -95,7 +95,7 @@ class ZabbixAPI(object):
         return object_name(self, *args, **kwargs)
 
     def get_host_by_hostid(self, hostids):
-        if not isinstance(hostids,list):
+        if not isinstance(hostids, list):
             hostids = [hostids]
         return [d['host'] for d in self.host.get({'hostids': hostids, 'output': 'extend'})]
 
@@ -135,11 +135,12 @@ def zabbix_api_object_method(func):
     return wrapper
 
 #################################################
-#    Zabbix API Object (host, item...)    
+#    Zabbix API Object (host, item...)
 #################################################
 
 
 class ZabbixAPIObjectFactory(object):
+
     def __init__(self, zapi, object_name=''):
         self.__zapi = zapi
         self.__object_name = object_name
@@ -155,16 +156,19 @@ class ZabbixAPIObjectFactory(object):
 
     def __getattr__(self, method_name):
         def method(params):
-            return self.proxy_method('%s.%s' % (self.__object_name,method_name), params)
+            return self.proxy_method('%s.%s' % (self.__object_name, method_name), params)
         return method
 
     # 'find' method is a wrapper of get.
-    # Difference between 'get' and 'find' is that 'find' can create object you want while it doesn't exist
+    # Difference between 'get' and 'find' is that 'find' can create object you
+    # want while it doesn't exist
     def find(self, params, attr_name=None, to_create=False):
         filtered_list = []
-        result = self.proxy_method('%s.get' % self.__object_name, {'output': 'extend', 'filter': params})
+        result = self.proxy_method(
+            '%s.get' % self.__object_name, {'output': 'extend', 'filter': params})
         if to_create and len(result) == 0:
-            result = self.proxy_method('%s.create' % self.__object_name, params)
+            result = self.proxy_method(
+                '%s.create' % self.__object_name, params)
             return result.values()[0]
         if attr_name is not None:
             for element in result:
@@ -172,7 +176,6 @@ class ZabbixAPIObjectFactory(object):
             return filtered_list
         else:
             return result
-
 
     @zabbix_api_object_method
     @check_auth

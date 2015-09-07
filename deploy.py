@@ -12,14 +12,14 @@ url = "192.168.12.209/shell/default.conf"  # 修改url为init的url地址
 hostnames = "node02"
 
 
-def deploys(IP):
+def deploys(IP, hostnames):
     commands = "echo %s" % hostnames + \
         "> hostname.txt&&curl -s %s" % url + "|bash"
     print remoteexec.execOnRemote(IP, commands)
 
 
 def main():
-    deploys(ips)
+    deploys(ips, hostnames)
 
 
 if __name__ == '__main__':

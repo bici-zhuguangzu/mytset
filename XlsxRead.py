@@ -5,14 +5,14 @@ import xlrd
 FileName = "/Users/zhuguangzu1/Documents/2.xlsx"
 
 
-def ReadXls():
-    data = xlrd.open_workbook(FileName)
+def ReadXls(filename):
+    data = xlrd.open_workbook(filename)
     table = data.sheets()[0]
     return table
 
 
-def MakeDict():
-    XlsxData = ReadXls()
+def MakeDict(filename):
+    XlsxData = ReadXls(filename)
     HostName = XlsxData.col_values(1)
     HostIP = XlsxData.col_values(7)
     nvs = zip(HostName, HostIP)
@@ -21,8 +21,7 @@ def MakeDict():
 
 
 def MakeDictFormXls():
-    ReadXls()
-    print MakeDict()
+    print MakeDict(FileName)
 
 
 def main():

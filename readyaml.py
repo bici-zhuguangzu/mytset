@@ -2,18 +2,18 @@
 
 import yaml
 
-FileName="/root/tets.yml"
-
+FileName = "/root/tets.yml"
 
 
 def readyaml():
-  	data= file('FileName','r')
-  	dict= yaml.load(data)
-  	print dict["IP"]
+    data = file('FileName', 'r')
+    dict = yaml.load(data)
+    print dict["IP"]
+
 
 def main():
-	readyaml()
+    readyaml()
 
 
 if __name__ == '__main__':
-	main()
+    main()
