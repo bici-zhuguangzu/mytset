@@ -6,8 +6,8 @@
 # @Version : $Id$
 
 import XlsxRead
-import deploy
-import threading
+from deploy import deploys
+import multiprocessing
 import time
 
 FileName = "/Users/zhuguangzu1/Documents/2.xlsx"
@@ -18,17 +18,24 @@ def printtest(test):
     time.sleep(1)
 
 
+def deploywithinput():
+    hostname = raw_input("enter hostname:")
+    ips = raw_input("enter ip:")
+    print hostname + ":" + ips
+
+
 def deployfromxlsx():
     HostDict = XlsxRead.MakeDict(FileName)
     del HostDict[u'名称']
+    pool = multiprocessing.Pool(processes=4)
     for key in HostDict.keys():
-        ips = key
-        hostname = HostDict[key]
-        test = ips + ":" + hostname
-        # target可以更换为deploys，args为ips hostname
-        t1 = threading.Thread(target=printtest, args=(test,))
-        t1.start()
-        # deploy.deploys(ips, hostname)
+        hostname = key
+        ips = HostDict[key]
+        test = hostname + ":" + ips
+        pool.apply_async(printtest, (test, )) #可以更改deploys
+    pool.close()
+    pool.join()
+    print "Sub-process(es) done."
 
 
 def main():
