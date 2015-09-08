@@ -25,17 +25,16 @@ def deploywithinput():
 
 
 def deployfromxlsx():
+    count = XlsxRead.CountOfDict()
     HostDict = XlsxRead.MakeDict(FileName)
-    del HostDict[u'名称']
-    pool = multiprocessing.Pool(processes=4)
+    pool = multiprocessing.Pool(processes=count)
     for key in HostDict.keys():
         hostname = key
         ips = HostDict[key]
         test = hostname + ":" + ips
-        pool.apply_async(printtest, (test, )) #可以更改deploys
+        pool.apply_async(printtest, (test, ))  # 可以更改deploys
     pool.close()
     pool.join()
-    print "Sub-process(es) done."
 
 
 def main():

@@ -26,7 +26,7 @@ def execOnRemote(host, command):
 
 
 def main():
-    print execOnRemote("192.168.12.203", "ls")
+    print execOnRemote("192.168.12.203", "cd /etc&&ls -l")
 
 if __name__ == '__main__':
     main()
