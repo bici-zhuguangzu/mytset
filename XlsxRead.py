@@ -17,8 +17,10 @@ def MakeDict(filename):
     HostIP = XlsxData.col_values(7)
     nvs = zip(HostName, HostIP)
     HostDict = dict((name, value) for name, value in nvs)
-    del HostDict[u'名称']
-    del HostDict[u'ResourceCenter']
+    if u'名称' in HostDict.keys():
+        del HostDict[u'名称']
+    if u'ResourceCenter' in HostDict.keys():
+        del HostDict[u'ResourceCenter']
     return HostDict
 
 
