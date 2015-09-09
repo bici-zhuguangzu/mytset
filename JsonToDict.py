@@ -5,21 +5,21 @@
 # @Link    : blog.zhuguangzu.xyz
 # @Version : $Id$
 
-import json
+import json as js
 
 FileName = "../test.json"
 
 
 def ReadFile():
     f = open(FileName, "r")
-    data = f.readline()
+    for line in f.readlines():
+        return line
     f.close
-    return data
 
 
 def ReadJson():
     data = ReadFile()
-    JsonDict = json.loads(data)
+    JsonDict = js.loads(data)
     return JsonDict
 
 
