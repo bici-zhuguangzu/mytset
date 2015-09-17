@@ -18,7 +18,7 @@ def manual_iter(f):
 
 
 def conn():
-    conn = pymongo.MongoClient()
+    conn = pymongo.MongoClient('192.168.12.210', 27017)
     return conn
 
 
@@ -38,7 +38,7 @@ def out():
 
 
 def main():
-    query()
+    print out()
 
 
 if __name__ == '__main__':
