@@ -9,15 +9,11 @@ import pycurl
 import logging
 import StringIO
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s %(filename)s[line:%(lineno)d]  \
-                    %(levelname)s %(message)s',
-                    datefmt='%a, %Y-%m-%d %H:%M:%S',
-                    filename='../logs/executeResult.log',
-                    filemode='a')  # 指定日志记录方式为追加
+
+url = "192.168.12.210"
 
 
-def testcurl(url):
+def curlUrl(url):
     curl = pycurl.Curl()
     output = StringIO.StringIO()
     curl.setopt(pycurl.URL, url)
@@ -28,15 +24,26 @@ def testcurl(url):
     # output.getvalue()
     return curl.getinfo(curl.HTTP_CODE)  # 返回http code
     curl.close
+    output.close
 
 
-def main():
-    url = '192.168.12.210'
-    retrunCode = testcurl(url)
+def accesslog():
+    retrunCode = curlUrl(url)
+    logging.basicConfig(level=logging.DEBUG,
+                        format='%(asctime)s %(filename)s[line:%(lineno)d]  \
+                    %(levelname)s %(message)s',
+                        datefmt='%a, %Y-%m-%d %H:%M:%S',
+                        filename='../logs/executeResult.log',
+                        filemode='a')  # 指定日志记录方式为追加
+
     if retrunCode != 200:
         logging.warning("access failure with HTTP_CODE %s" % retrunCode)
     else:
         logging.debug("access ok %s" % retrunCode)
+
+
+def main():
+    accesslog()
 
 
 if __name__ == '__main__':
