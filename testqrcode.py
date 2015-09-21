@@ -27,6 +27,7 @@ def createimg():
     qr.make(fit=True)
     img = qr.make_image()
     img.save(content2 + '.png')
+    
 
 
 def main():
