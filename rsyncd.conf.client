@@ -1,0 +1,21 @@
+uid = nobody
+gid = nobody
+use chroot = no
+max connections = 10 
+strict modes = yes
+pid file = /var/run/rsyncd.pid
+lock file = /var/run/rsync.lock
+log file = /var/log/rsyncd.log
+[lixuan]
+path = /home/test/          
+comment = client file 
+ignore errors
+read only = no 
+write only = no 
+hosts allow = 192.168.12.206
+hosts deny = *
+list = false
+uid = root
+gid = root 
+auth users = root 
+secrets file = /etc/client1.pass

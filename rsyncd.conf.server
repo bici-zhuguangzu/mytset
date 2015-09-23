@@ -1,0 +1,15 @@
+uid = root
+gid = root
+use chroot = no
+max connections = 100
+log file = /var/log/rsyncd.log
+pid file = /var/run/rsyncd.pid
+lock file = /var/run/rsync.lock
+secrets file = /etc/server.pass
+[lixuan]
+path = /home/test/
+auth users = root
+list = no
+read only = no
+secrets file = /etc/servers.pass
+comment = server directory

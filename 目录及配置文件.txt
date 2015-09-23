@@ -1,0 +1,41 @@
+uid = nobody
+gid = nobody
+use chroot = no
+max connections = 10
+strict modes = yes
+pid file = /var/run/rsyncd.pid
+lock file = /var/run/rsync.lock
+log file = /var/log/rsyncd.log
+[lixuan]
+path = /home/test/
+comment = client file
+ignore errors
+read only = no
+write only = no
+hosts allow = 192.168.12.206
+hosts deny = *
+list = false
+uid = root
+gid = root
+auth users = root
+secrets file = /etc/client1.pass
+
+/usr/bin/rsync -auvrtzopgP --progress --password-file=/etc/client.pass /home/test root@192.168.12.203::lixuan
+/usr/bin/rsync -auvrtzopgP --progress --password-file=/etc/client.pass /home/test root@192.168.12.204::lixuan
+
+
+/tmp/src/pdf
+@/tmp/src/2014  rsync排除列表文件写法
+
+
+INOTIFY_EXCLUDE='(.*/*\.log|.*/*\.swp)$|^/tmp/src/mail/(2014|20.*/.*che.*)'   inotify脚本直接书写方法
+
+
+inotify_exclude='(/home/dev/Service/odataSeivece/logs|/home/dev/Service/odataSeivece/images|/home/dev/Service/odataSeivece/node_modules|/home/dev/Service/expressSeivece/node_modules)'
+rsync_exclude='/etc/rsynced.d/rsync_exclude.lst'
+
+/etc/rsynced.d/rsync_exclude.lst
+/home/dev/Service/odataSeivece/logs
+/home/dev/Service/odataSeivece/images
+/home/dev/Service/odataSeivece/node_modules
+/home/dev/Service/expressSeivece/node_modules

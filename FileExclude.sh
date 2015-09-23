@@ -23,8 +23,8 @@ inotifyAndRsync(){
 }
 
 
-if [[ !-f ${log_file} ]]; then
-    touch ${log_file}
+if [[ !-f "$log_file" ]]; then
+    touch "$log_file"
 fi
 
 inotifyAndRsync >> ${log_file} 2>&1 &
