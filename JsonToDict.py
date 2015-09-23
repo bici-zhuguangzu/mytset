@@ -26,11 +26,11 @@ def ReadJson():
 def GainKeys():
     dict = ReadJson()
     for keys in dict.keys():
-        print keys
+        return keys
 
 
 def main():
-    GainKeys()
+    print ReadJson()
 
 if __name__ == '__main__':
     main()

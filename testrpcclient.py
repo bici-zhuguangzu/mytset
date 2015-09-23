@@ -12,3 +12,10 @@ s = ServerProxy("http://127.0.0.1:8787")
 
 def diaoyong():
     print s.testprint("rpc test")
+
+def diaoyong1():
+    for keys in s.json():
+        print keys
+
+if __name__ == '__main__':
+    diaoyong()

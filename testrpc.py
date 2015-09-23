@@ -6,16 +6,21 @@
 # @Version : $Id$
 
 from SimpleXMLRPCServer import SimpleXMLRPCServer
-import testqrcode
+import JsonToDict
 
 
 def testprint(test):
-    return "this is a %s" %test
+    return "this is a %s" % test
+
+
+def json():
+    return JsonToDict.ReadJson()
 
 
 def startservice():
     s = SimpleXMLRPCServer(('127.0.0.1', 8787))
     s.register_function(testprint)
+    s.register_function(json)
     s.serve_forever()
 
 
