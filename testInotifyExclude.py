@@ -11,6 +11,9 @@ import pyinotify
 import logging
 import time
 
+# 指定监控的文件夹路径
+DirName = '/home/dev/Service/expressSeivece/'
+
 
 class MyEventHandler(pyinotify.ProcessEvent):
     logging.basicConfig(level=logging.DEBUG,
@@ -23,7 +26,7 @@ class MyEventHandler(pyinotify.ProcessEvent):
 
     def process_IN_CLOSE_WRITE(self, event):
         # 下面为发现文件有变化执行的操作
-        os.chdir('/home/dev/Service/expressSeivece')
+        os.chdir(DirName)
         time.sleep(30)
         os.system('npm install --proxy http://******:8888')
         message = os.popen('forever restart bin/www||forever start bin/www')
@@ -38,12 +41,11 @@ def main():
     excl_lst = ['^/home/dev/Service/expressSeivece/log/*.log']
     excl = pyinotify.ExcludeFilter(excl_lst)
     wm.add_watch(
-        '/home/dev/Service/expressSeivece/', pyinotify.ALL_EVENTS,
+        DirName, pyinotify.ALL_EVENTS,
         rec=True, exclude_filter=excl)
-    # /root/Service/expressSeivece/README.md是可以自己修改的监控的目录或文件
     # event handler
-    # notifier
     eh = MyEventHandler()
+    # notifier
     notifier = pyinotify.Notifier(wm, eh)
     notifier.loop()
 

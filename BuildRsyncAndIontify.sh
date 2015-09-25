@@ -5,14 +5,17 @@
 # @Link    : http://blog.zhuguangzu.xyz
 # @Version : $Id$
 
-PAckageNameInotify=
-PAckageNameRsync=
+PAckageNameInotify=inotify-tools
+PAckageNameRsync=rsync
+PAckageNameXinetd=xinetd
 InstallType=$1
-UserName=
-Passwd=
-ServerIP=
-ClientIp=
-SyncPath
+UserName=root
+Passwd=bici!@#Sync
+ServerIP=10.172.6.233
+ClientIp1=10.170.224.93
+ClientIp2=10.173.37.171
+SyncPath=/home/dev/Service/
+moduleName=bicicode
 
 CreateServerConf(){
 cat <<EOF >/etc/rsyncd.conf
@@ -20,18 +23,20 @@ uid = root
 gid = root
 use chroot = no
 max connections = 100
-log file = \/var\/log\/rsyncd.log
-pid file = \/var\/run\/rsyncd.pid
-lock file = \/var\/run\/rsync.lock
-secrets file = \/etc\/server.pass
-[lixuan]
+log file = /var/log/rsyncd.log
+pid file = /var/run/rsyncd.pid
+lock file = /var/run/rsync.lock
+secrets file = /etc/server.pass
+[$moduleName]
 path = $SyncPath
 auth users = UserName
+hosts allow = 10.0.0.0/255.0.0.0,$ClientIp1
 list = no
 read only = no
-secrets file = \/etc\/servers.pass
+secrets file = /etc/servers.pass
 comment = server directory
 EOF
+chmod 600 /etc/rsyncd.conf
 }
 
 CreateClientConf(){
@@ -41,10 +46,10 @@ gid = nobody
 use chroot = no
 max connections = 10
 strict modes = yes
-pid file = \/var\/run\/rsyncd.pid
-lock file = \/var\/run\/rsync.lock
-log file = \/var\/log\/rsyncd.log
-[lixuan]
+pid file = /var/run/rsyncd.pid
+lock file = /var/run/rsync.lock
+log file = /var/log/rsyncd.log
+[$moduleName]
 path = $SyncPath
 comment = client file
 ignore errors
@@ -56,8 +61,9 @@ list = false
 uid = root
 gid = root
 auth users = $UserName
-secrets file = \/etc\/client.pass
+secrets file = /etc/client.pass
 SSS
+chmod 600 /etc/rsyncd.conf
 }
 
 CreatePassowdServer(){
@@ -65,24 +71,27 @@ CreatePassowdServer(){
 }
 
 CreatePassowdClient(){
-    echo $UserName:$Passwd >/etc/client.pass 
+    echo $UserName:$Passwd >/etc/client.pass
 }
 
 InstallInotify(){
-    yum install inotify
+    yum -y install $PAckageNameInotify
 }
 
 InstallRsync(){
-    yum install rsync
+    yum -y install $PAckageNameRsync
+    yum -y install $PAckageNameXinetd
 }
 
 ConfigureRsyncServer(){
+    sed -i "s/yes/no/g" /etc/xinetd.d/rsync
     CreateServerConf
     CreatePassowdServer
 }
 
 ConfigureRsyncClient(){
-    ConfigureRsyncClient
+    sed -i "yes/no/g" /etc/xinetd.d/rsync
+    CreateClientConf
     CreatePassowdClient
 }
 
@@ -91,13 +100,13 @@ case $InstallType in
         InstallInotify
         InstallInotify
         ConfigureRsyncServer
+        service xinetd start
     ;;
-    $InstallType in
     Client )
         InstallRsync
         ConfigureRsyncClient
+        service xinetd start
     ;;
-    $InstallType in
     * )
         echo "usage: Server|Client"
     ;;

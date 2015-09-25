@@ -20,8 +20,9 @@ gid = root
 auth users = root
 secrets file = /etc/client1.pass
 
-/usr/bin/rsync -auvrtzopgP --progress --password-file=/etc/client.pass /home/test root@192.168.12.203::lixuan
-/usr/bin/rsync -auvrtzopgP --progress --password-file=/etc/client.pass /home/test root@192.168.12.204::lixuan
+/usr/bin/rsync -auvrtzopgP --progress --password-file=/etc/client.pass /home/test/ root@192.168.12.203::lixuan
+/usr/bin/rsync -auvrtzopgP --progress --password-file=/etc/client.pass /home/test/ root@192.168.12.204::lixuan
+/usr/bin/rsync -auvrtzopgP --progress --password-file=/etc/client.pass /home/test/ root@192.168.12.207::lixuan
 
 
 /tmp/src/pdf
@@ -31,11 +32,23 @@ secrets file = /etc/client1.pass
 INOTIFY_EXCLUDE='(.*/*\.log|.*/*\.swp)$|^/tmp/src/mail/(2014|20.*/.*che.*)'   inotify脚本直接书写方法
 
 
-inotify_exclude='(/home/dev/Service/odataSeivece/logs|/home/dev/Service/odataSeivece/images|/home/dev/Service/odataSeivece/node_modules|/home/dev/Service/expressSeivece/node_modules)'
-rsync_exclude='/etc/rsynced.d/rsync_exclude.lst'
+/usr/bin/inotifywait -mrq --timefmt '%d/%m/%y %H:%M' --format '%T %w%f%e'-fromfile=${inotify_exclude} -e close_write $src | while read files
 
 /etc/rsynced.d/rsync_exclude.lst
 /home/dev/Service/odataSeivece/logs
 /home/dev/Service/odataSeivece/images
 /home/dev/Service/odataSeivece/node_modules
 /home/dev/Service/expressSeivece/node_modules
+
+vim /etc/rsynced.d/rsync_excude.lst      test   /相对路径
+odataSeivece/logs/
+odataSeivece/images/
+odataSeivece/node_modules/
+expressSeivece/node_modules/
+
+
+vim /etc/inotifywait_exclude.lst      @/home/test/test     //绝对路径
+@/home/dev/Service/odataSeivece/logs
+@/home/dev/Service/odataSeivece/images
+@/home/dev/Service/odataSeivece/node_modules
+@/home/dev/Service/expressSeivece/node_modules
