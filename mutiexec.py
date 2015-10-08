@@ -21,7 +21,8 @@ import socket
 from threading import Thread
 import time
 
- class MyThread(Thread):
+
+class MyThread(Thread):
 
     def __init__(self, workQueue, timeout=1):
         Thread.__init__(self)
@@ -30,25 +31,32 @@ import time
         self.workQueue = workQueue
         self.start()
         # print 'i am runnning ...'
-     def run(self):
+
+    def run(self):
         emptyQueue = 0
         while True:
             try:
-                callable, username, password, ipAddress, port,comms = self.workQueue.get(timeout = self.timeout)
-                # print 'attacking :',ipAddress,username,password,threading.currentThread().getName(),' time : '
-                callable(username,password, ipAddress, port,comms)
+                callable, username, password, ipAddress, port, comms = self.workQueue.get(
+                    timeout=self.timeout)
+                # print 'attacking
+                # :',ipAddress,username,password,threading.currentThread().getName(),'
+                # time : '
+                callable(username, password, ipAddress, port, comms)
 
             except Queue.Empty:
-                print threading.currentThread().getName(),":queue is empty ; sleep 5 seconds\n"
+                print threading.currentThread().getName(), ":queue is empty ; sleep 5 seconds\n"
                 emptyQueue += 1
                 # judge the queue,if it is empty or not.
                 time.sleep(5)
                 if emptyQueue == 5:
-                    print threading.currentThread().getName(),'i  quit,the queue is empty'
+                    print threading.currentThread().getName(), 'i  quit,the queue is empty'
                     break
             except Exception, error:
-                print error 
- class ThreadPool:
+                print error
+
+
+class ThreadPool:
+
     def __init__(self, num_of_threads=10):
         self.workQueue = Queue.Queue()
         self.threads = []
@@ -66,64 +74,66 @@ import time
             thread = self.threads.pop()
             if thread.isAlive():
 
-                thread.join() 
-     def add_job(self, callable, username, password, ipAddress, Port,comms):
-        self.workQueue.put((callable, username, password, ipAddress, Port,comms))
+                thread.join()
 
-def uploadAndExecu(usernam,password,hostname,port,comm):
-    print usernam,password,hostname,port,comm
+    def add_job(self, callable, username, password, ipAddress, Port, comms):
+        self.workQueue.put(
+            (callable, username, password, ipAddress, Port, comms))
+
+
+def uploadAndExecu(usernam, password, hostname, port, comm):
+    print usernam, password, hostname, port, comm
     try:
 
-        t = paramiko.Transport((hostname,int(port)))
-        t.connect(username=username,password=password)
-        sftp=paramiko.SFTPClient.from_transport(t)
-        sftp.put(comm['local_dir'],comm['remote_dir'])
-    except Exception,e:
-        print 'upload files failed:',e
+        t = paramiko.Transport((hostname, int(port)))
+        t.connect(username=username, password=password)
+        sftp = paramiko.SFTPClient.from_transport(t)
+        sftp.put(comm['local_dir'], comm['remote_dir'])
+    except Exception, e:
+        print 'upload files failed:', e
         t.close()
     finally:
         t.close()
 
-    
     try:
         ssh = paramiko.SSHClient()
         ssh.load_system_host_keys()
         ssh.set_missing_host_key_policy(paramiko.MissingHostKeyPolicy())
-        ssh.connect(hostname, port=int(port), username=username, password=password)
+        ssh.connect(
+            hostname, port=int(port), username=username, password=password)
         ssh.exec_command(comm['alter_auth'])
         ssh.exec_command(comm['exec_program'])
-    except Exception,e:
-        print 'chang file auth or execute the file failed:',e
+    except Exception, e:
+        print 'chang file auth or execute the file failed:', e
     ssh.close()
 
-    
+
 def readConf():
-    comm={}
+    comm = {}
     try:
-        f = file('command.txt','r')
+        f = file('command.txt', 'r')
         for l in f:
             sp = l.split(':')
-            comm[sp[0]]=sp[1].strip('\n')
-    except Exception,e:
-        print 'open file command.txt failed:',e
+            comm[sp[0]] = sp[1].strip('\n')
+    except Exception, e:
+        print 'open file command.txt failed:', e
     f.close()
 
-    return comm 
- if __name__ == "__main__":
+    return comm
+if __name__ == "__main__":
 
     commandLine = readConf()
-    print commandLine 
+    print commandLine
     # prepare the ips
 
     wm = ThreadPool(int(commandLine['ThreadNum']))
 
     try:
-        ipFile = file('ipandpass.txt','r')
+        ipFile = file('ipandpass.txt', 'r')
     except:
         print "[-] ip.txt Open file Failed!"
         sys.exit(1)
 
     for line in ipFile:
-        IpAdd,username,pwd = line.strip('\r\n').split(' ')
-        wm.add_job(uploadAndExecu,username,pwd,IpAdd,commandLine['port'],commandLine)
- pep
+        IpAdd, username, pwd = line.strip('\r\n').split(' ')
+        wm.add_job(uploadAndExecu, username, pwd, IpAdd, commandLine['port'], commandLine)
