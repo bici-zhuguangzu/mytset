@@ -16,7 +16,7 @@ conf(){
     sed -i "s/ServerActive=127.0.0.1/ServerActive=$serverip:10051/g" /etc/zabbix/zabbix_agentd.conf
     sed -i "s/Hostname/#Hostname/g" /etc/zabbix/zabbix_agentd.conf
     echo ListenIP=`ifconfig eth0|grep inet|awk -F " " '{print $2}'|awk -F ":" '{print $2}'` >> /etc/zabbix/zabbix_agentd.conf
-    echo `hostname` >> /etc/zabbix/zabbix_agentd.conf
+    echo Hostname = `hostname` >> /etc/zabbix/zabbix_agentd.conf
     echo HostMetadataItem=system.uname >> /etc/zabbix/zabbix_agentd.conf
 }
 install

@@ -10,7 +10,7 @@ path=/usr/share/nginx/html
 download(){
     cd $path
     mkdir package&&cd package
-    wget `cat /root/ResourceCenter/pkglist`
+    wget -c `cat /root/ResourceCenter/pkglist`
 }
 move2nginx(){
     cp -r $path_now/shell $path

@@ -13,7 +13,7 @@ install(){
 clone(){
     ＃克隆项目到本地 test
     cd /root
-    git clone https://bici-deployer:Bici1314@github.com/BiCiCare/ResourceCenter.git
+    git clone https://******:******@github.com/BiCiCare/ResourceCenter.git
 }
 install
 clone
