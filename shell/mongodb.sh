@@ -4,11 +4,14 @@ dirname=mongodb-linux-x86_64-2.6.10
 cd /home
 rm -f $pkgname
 rm -rf $dirname
-wget resource/package/$pkgname
-tar zxvf $pkgname
-mv /home/$dirname/bin/* /usr/bin
-rm -f $pkgname
-rm -rf $dirname
+install(){
+    wget resource/package/$pkgname
+    tar zxvf $pkgname
+    mv /home/$dirname/bin/* /usr/bin
+    rm -f $pkgname
+    rm -rf $dirname
+}
+conf(){
 cat > /etc/init.d/mongodb <<EOF
 #!/bin/bash
 #
@@ -38,8 +41,10 @@ case "\$1" in
  exit 1
 esac
 EOF
-chmod u+x /etc/init.d/mongodb
-mkdir -p /etc/mongodb
+}
+addOnboot(){
+    chmod u+x /etc/init.d/mongodb
+    mkdir -p /etc/mongodb
 cat > /etc/mongodb/bici.conf <<EOF
 #27017.conf
 dbpath=/home/mongodb/data
@@ -54,7 +59,11 @@ oplogSize=1000
 fork=true
 noprealloc=true
 EOF
-mkdir -p /home/mongodb/data
-mkdir -p /home/mongodb/log
-chkconfig --add mongodb
-chkconfig mongodb on
+    mkdir -p /home/mongodb/data
+    mkdir -p /home/mongodb/log
+    chkconfig --add mongodb
+    chkconfig mongodb on
+}
+install
+conf
+addOnboot

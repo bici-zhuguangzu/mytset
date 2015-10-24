@@ -1,5 +1,6 @@
 #!/bin/bash
 unset install
+unset clone
 install(){
     #下载编译git需要的依赖包
     yum -y install curl-devel expat-devel gettext-devel \

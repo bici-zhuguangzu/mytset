@@ -36,7 +36,7 @@ def main():
     # watch manager
     wm = pyinotify.WatchManager()
     wm.add_watch(
-        '/home/dev/Service/expressSeivece/README.md',  \
+        '/home/dev/Service/expressSeivece/README.md',
         pyinotify.ALL_EVENTS, rec=True)
     # /root/Service/expressSeivece/README.md是可以自己修改的监控的目录或文件
     # event handler

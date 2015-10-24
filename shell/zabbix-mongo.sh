@@ -4,7 +4,7 @@
 ip=`ifconfig eth0|grep Bcast|awk -F: '{print $2}'|awk -F " " '{print $1}'`
 #echo $ip
 #create userparameter for mongodb
-cat >> /etc/zabbix/zabbix_agentd.d/userparameter_mysql.conf <<EOF
+cat >> /etc/zabbix/zabbix_agentd.d/userparameter_mongodb.conf <<EOF
 UserParameter=mongo.mem_resident,echo "db.serverStatus().mem"| mongo -host $ip admin|grep resident | cut -d ":" -f 2 |cut -d "," -f 1| cut -d " " -f 2
 UserParameter=mongo.mem_virtual,echo "db.serverStatus().mem"| mongo -host $ip admin|grep virtual | cut -d ":" -f 2 |cut -d "," -f 1| cut -d " " -f 2
 UserParameter=mongo.mem_mapped,echo "db.serverStatus().mem"| mongo -host $ip admin|grep '\bmapped\b' | cut -d ":" -f 2 |cut -d "," -f 1| cut -d " " -f 2

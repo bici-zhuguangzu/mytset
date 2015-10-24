@@ -16,7 +16,7 @@ InstallVsftp(){
 }
 
 ConfigureVsftp(){
-    sed -i 's/anonymous_enable=NO/anonymous_enable=NO/g' $ConfilePath
+    sed -i 's/anonymous_enable=YES/anonymous_enable=NO/g' $ConfilePath
 cat <<EOF >/etc/vsftpd/vsftpd.conf
 listen_address=$LanIP
 listen_port=2231

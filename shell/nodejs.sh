@@ -10,4 +10,3 @@ source /etc/profile
 rm -rf $pkgname
 cd $path_now
 node -v
-exit&&source /etc/profile

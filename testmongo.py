@@ -12,6 +12,7 @@ def conn():
     conn = pymongo.MongoClient()
     return conn
 
+
 def coll():
     db = conn().bici()
     coll = db.note()
@@ -24,7 +25,7 @@ def query():
 
 def main():
     query()
-    
+
 
 if __name__ == '__main__':
     main()
