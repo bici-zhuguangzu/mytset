@@ -7,16 +7,14 @@
 
 from fabric.api import *
 from fabric.colors import *
-from fabric.contrib.console import confirm
+# from fabric.contrib.console import confirm
+import config
 
 
-env.hosts = ['192.168.10.191', '192.168.10.138']
-env.user = 'root'
-env.password = '111111'
-env.roledefs = {
-    'webserver': ['192.168.10.191'],
-    'dbserver': ['192.168.10.138']
-}
+env.hosts = config.hosts
+env.user = config.username
+env.password = config.passwd
+env.roledefs = config.groups
 
 
 @runs_once
