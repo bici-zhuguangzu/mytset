@@ -1,4 +1,4 @@
-#!/bin/bash
+mnnnnnnnnmmm                                      ertyukmnxzzzsdrtyuio;...nbfdw1    #!/bin/bash
 path_now=`pwd`
 pkgname=node-v0.12.4-linux-x64.tar.gz
 dirname=node-v0.12.4-linux-x64
