@@ -4,7 +4,7 @@
 # @Author  : zhuguangzu (guangzu_zhu@163.com)
 # @Link    : http://blog.zhuguangzu.xyz
 # @Version : $Id$
-# @Desc 	   :init system
+# @Desc        :init system
 
 DelUnavilableAccount(){
     userdel adm
@@ -41,5 +41,10 @@ DisableIpV6(){
 
 youhua(){
     
+}
+
+Addrepo(){
+    yum -y install epel-release
+    rpm -ivh http://apt.sw.be/redhat/el6/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
 }
 

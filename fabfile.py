@@ -18,6 +18,7 @@ env.roledefs = config.groups
 
 
 @roles('webserver')
+@parallel(pool_size=5)
 def webtask():
     print yellow('install nginx')
     with settings(warn_only=True):
@@ -42,11 +43,11 @@ def dbtask():
         run('yum -y install salt-master')
 
 
+@task
+@roles('webserver', 'dbserver')
+@parallel
 def base():
     run('yum -y install epel-release')
-    run('rpm -Uvh http://apt.sw.be/redhat/ \
-        el6/en/x86_64/rpmforge/RPMS/ \
-        rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm')
 
 
 @task

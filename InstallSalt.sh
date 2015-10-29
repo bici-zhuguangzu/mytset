@@ -24,9 +24,9 @@ InstallMinion(){
 
 case $1 in
     master )
-InstallMaster
-        ;;
+        InstallMaster
+    ;;
     minion )
-InstallMinion
-        ;;
+        InstallMinion
+    ;;
 esac

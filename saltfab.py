@@ -15,7 +15,7 @@ import config
 env.hosts = config.hosts
 env.user = config.username
 env.password = config.passwd
-env.roledefs = config.groups
+env.roledefs = config.saltgroups
 
 
 @roles('master')
