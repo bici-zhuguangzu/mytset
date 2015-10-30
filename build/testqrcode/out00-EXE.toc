@@ -1,9 +1,0 @@
-('/Users/zhuguangzu/mytset/dist/testqrcode',
- True,
- False,
- None,
- None,
- [],
- None,
- False,
- 1442040477)
