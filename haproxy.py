@@ -40,16 +40,13 @@ def GainNote():
     backend = "backend " + read + '\n'
     # print backend
     with open('haproxy', 'rw') as f:
-        for line in open('haproxy', 'r'):
-            line = f.readline()
-            if line == backend:
-                print line
-                continue
-                if line is None:
-                    break
-            else:
-                print line
-
+        lines = f.readlines()
+        total = len(lines)
+        i = 0
+        for i in range(1,total):
+            if lines[i] == backend:
+                print lines[i]
+                print lines[i+1]
 
 
 def AddNote():
@@ -73,7 +70,7 @@ def AddNote():
         print record
         for line in open('haproxy', 'r'):
             if line == backend:
-                f.write('\n'+record)
+                f.write('\n' + record)
                 break
         else:
             content = '\n' + backend + record + '\n'
@@ -100,16 +97,13 @@ def DelNote():
         record = '\t' + "server " + server + " weight " + \
             str(weight) + " maxconn " + str(maxconn)
         print record
-        for line in open('haproxy', 'r'):
-            line = f.readline()
-            if line == backend:
-                with open('haproxybak', 'a') as bak:
-                    bak.write(line)
-                if line == record:
-                    pass
+        lines = f.readlines()
+        total = len(lines)
+        for i in range(1,total):
+            if lines[i] == record:
+                pass
             else:
-                with open('haproxybak', 'a') as bak:
-                    bak.write(line)
+                print lines[i]
 
 
 

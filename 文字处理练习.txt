@@ -2,4 +2,7 @@ cat log|awk -F '' '{print $2}'|uniq -c|sort -u  日志排序
 awk 'BEGIN {count=0} {if($2!="91.121.211.59"){count++}} END {print count}' log  awk日志统计  awk begin end学习
 grep -A num 查询关键字上几行
 grep -B Num 关键字下几行
-grep -C num  上下N行
+grep -C num  上下N行  
+date "+%Y%m%d%H%M"  按特定格式取出时间
+echo "please input the content into the \033[31m input.txt \033[0m like this:"
+cat /proc/interrupts | grep ethx  查看网卡绑定
