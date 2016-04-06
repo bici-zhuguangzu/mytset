@@ -33,8 +33,10 @@ class urltest:
             print respone.read()
 
 
-values = {'body': 'test short talk', 'via': 'xxxx'}
-url = 'http://127.0.0.1'
+values = {'username': 'guangzu', 'passwd': '123456'}
+url = 'http://www.baidu.com'
 test = urltest(url, values)
-data =  test.makedata()
-print test.acc_url(data)
+data = test.makedata()
+print data
+for i in xrange(1,100):
+    print test.acc_url(data)

@@ -30,6 +30,19 @@ class tt(supertst):
         print self.value
 
 
-m = tt('you', 'self')
-m.printdata()
-m.printvalue()
+class tttt(tt):
+    """docstring for ttt"""
+
+    def __init__(self, arg, arg1, arg2):
+        tt.__init__(self, arg, arg1)
+        self.key = arg2
+
+    def printkey(self):
+        print self.key
+
+
+if __name__ == '__main__':
+    m = tttt('you', 'self', 'me')
+    m.printdata()
+    m.printvalue()
+    m.printkey()
