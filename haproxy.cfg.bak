@@ -26,9 +26,8 @@ frontend oldboy
         use_backend www.oldboy.org if www
 
 backend www.oldboy.org
-	server 100.1.7.9 100.1.7.9 weight 20 maxconn 3000
-	server 100.1.7.10 100.1.7.10 weight 10 maxconn 2000
-	server test 123.123.123.123 weight 4 maxconn 20000
+        server 100.1.7.9 100.1.7.9 weight 20 maxconn 3000
+        server 100.1.7.10 100.1.7.10 weight 10 maxconn 2000
 
 frontend mysql
         bind *:3306
@@ -37,5 +36,5 @@ frontend mysql
         default_backend mysqlserver
 
 backend mysqlserver
-	server mysql1 10.1.1.110:3306 weight 20 maxconn 300
-	server mysql2 10.1.1.120:3306 weight 10 maxconn 200
+        server mysql1 10.1.1.110:3306 weight 20 maxconn 300
+        server mysql2 10.1.1.120:3306 weight 10 maxconn 200
