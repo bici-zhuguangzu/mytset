@@ -74,7 +74,7 @@ class lvsprase:
 
     def searchvip(self):
         lvsdict = self.getlvsdict()
-        #print lvsdict
+        # print lvsdict
         vip = raw_input("pls input vip,port or quit: ")
         if vip in lvsdict.keys():
             print vip
