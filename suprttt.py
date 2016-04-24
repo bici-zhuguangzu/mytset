@@ -9,40 +9,38 @@
 import os
 
 
-class supertst:
-    """docstring for supertst"""
+class A(object):
 
-    def __init__(self, arg):
-        self.data = arg
+    def __init__(self):
+        print "A"
+        super(A, self).__init__()
 
-    def printdata(self):
-        print self.data
-
-
-class tt(supertst):
-    """docstring for tt"""
-
-    def __init__(self, arg, arg1):
-        supertst.__init__(self, arg)
-        self.value = arg1
-
-    def printvalue(self):
-        print self.value
+    def p(self):
+        print "AA"
 
 
-class tttt(tt):
-    """docstring for ttt"""
+class B(object):
 
-    def __init__(self, arg, arg1, arg2):
-        tt.__init__(self, arg, arg1)
-        self.key = arg2
+    def __init__(self):
+        print "B"
+        super(B, self).__init__()
 
-    def printkey(self):
-        print self.key
+    def p(self):
+        print "BB"
 
+
+class C(A, B):
+
+    def __init__(self):
+        print "C"
+        A.__init__(self)
+        B.__init__(self)
+
+    def p(self):
+        print "CC"
+        A.p(self)
+        B.p(self)
 
 if __name__ == '__main__':
-    m = tttt('you', 'self', 'me')
-    m.printdata()
-    m.printvalue()
-    m.printkey()
+    c = C()
+    c.p()
