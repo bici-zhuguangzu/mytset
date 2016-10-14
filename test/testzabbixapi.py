@@ -4,9 +4,9 @@
 
 import urllib
 import urllib2
-import simplejson as json
-username = "Admin"
-passwd = "123qwe"
+import json
+username = "admin"
+passwd = "sinazabbix"
 
 
 def post(url, data):
@@ -42,12 +42,12 @@ def post(url, data):
 
 
 def main():
-    posturl = "http://192.168.12.210/zabbix/api_jsonrpc.php"
+    posturl = "http://z.lb.sina.com.cn/api_jsonrpc.php"
     dd = {"jsonrpc": "2.0",
           "method": "user.login",
           "params": {
-              "user": username,
-              "password": "123qwe"
+              "user": 'admin',
+              "password": 'sinazabbix'
           },
           "id": 1,
           "auth": None
