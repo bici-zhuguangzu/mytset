@@ -20,8 +20,11 @@ import os
 import time
 from docopt import docopt
 
+def function():
+    pass
+
 
 if __name__ == '__main__':
     argumemt = docopt(__doc__, version='wwww 0.0.1')
-    print argumemt['<group>']
-    print argumemt['<name>']
+    print(argumemt['<group>'])
+    print(argumemt['<name>'])
