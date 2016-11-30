@@ -22,4 +22,4 @@ print(asarray[0])
 '''
 f = os.scandir('.')
 for dir in f:
-    print(dir)
+    print(dir.name)
