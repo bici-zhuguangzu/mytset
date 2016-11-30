@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Date    : 2016-10-06 23:40:45
+# @Date    : 2016-10-29 23:05:05
 # @Author  : zhuguangzu (guangzu_zhu@163.com)
 # @Link    : http://blog.zhuguangzu.xyz
 # DESC     :
 # @Version : $Id$
 
+import celery
 
-a = {1,2,4,3,4}
-b = {1,2,3}
-
-print(a.difference(b))
-print(a.intersection(b))
+@celery.task
+def add(x, y):  
+    z = x+y
+    return z 

@@ -1,14 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Date    : 2016-10-06 23:40:45
+# @Date    : 2016-10-29 23:07:51
 # @Author  : zhuguangzu (guangzu_zhu@163.com)
 # @Link    : http://blog.zhuguangzu.xyz
 # DESC     :
 # @Version : $Id$
 
+BROKER_URL = "redis://192.168.10.117:6379/0"
 
-a = {1,2,4,3,4}
-b = {1,2,3}
-
-print(a.difference(b))
-print(a.intersection(b))
+CELERY_IMPORTS = ("tasks.add", )

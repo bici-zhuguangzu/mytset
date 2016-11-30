@@ -22,4 +22,9 @@ print(asarray[0])
 '''
 f = os.scandir('.')
 for dir in f:
+<<<<<<< Updated upstream
     print(dir.name)
+=======
+    # print(type(dir))
+    print(dir.name)
+>>>>>>> Stashed changes
